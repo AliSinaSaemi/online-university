@@ -1,0 +1,224 @@
+/***********************
+
+      Main Colors
+
+***********************/
+
+$red-primary: #8e162a;
+$white-primary: #fff;
+$black-primary: #212529;
+
+a {
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+#app-container {
+  background-color: #f8f8f8;
+}
+
+.display-flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.card.sage {
+  padding: 35px;
+}
+
+form.sage {
+  padding: 30px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  textarea {
+    height: 150px;
+  }
+  button {
+    margin: auto;
+    margin-top: 25px;
+    display: block;
+    width: 140px;
+  }
+}
+
+.sa_ticket_item {
+  margin: 20px 0;
+  img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+  }
+  .header {
+    padding: 10px;
+    background-color: #d6d6d6;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    span {
+      margin-left: auto;
+      &.date {
+        position: relative;
+        top: 5px;
+      }
+    }
+    h3 {
+      font-size: 20px;
+    }
+    h4 {
+      margin: 0;
+    }
+  }
+  .body {
+    p {
+      margin: 0;
+      line-height: 25px;
+      text-align: justify;
+    }
+    padding: 15px;
+    border: 1px solid #d6d6d6;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+}
+
+.sage.accordion {
+  button {
+    width: 100%;
+    border-radius: 5px;
+    font-size: 20px;
+    position: relative;
+    text-align: left;
+    i {
+      position: absolute;
+      right: 25px;
+      top: 15px;
+    }
+  }
+  span {
+    width: 100%;
+  }
+  .card {
+    .card-body {
+      border-bottom: 1px solid #2b2b2b;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.sage {
+  #reply-button {
+    width: 100%;
+    border-radius: 50px;
+    font-size: 15px;
+    position: relative;
+    text-align: left;
+    i {
+      position: absolute;
+      right: 25px;
+      top: 15px;
+    }
+  }
+}
+
+.sa_required_input {
+  font-size: 9px;
+  position: relative;
+  left: 3px;
+  bottom: 1px;
+  color: #8c8c8c;
+}
+
+/***********************
+
+    Reactbootstrap
+        Fixes
+
+***********************/
+
+.btn-primary {
+  background-color: $red-primary;
+  border: 1px solid $red-primary;
+  &:hover {
+    background-color: $white-primary;
+    color: $red-primary;
+    border: 1px solid $red-primary;
+  }
+}
+
+.tab-content {
+  padding: 25px;
+}
+
+.nav-tabs {
+  .nav-item.show .nav-link,
+  .nav-link.active {
+    color: $red-primary;
+  }
+  .nav-link {
+    border: none;
+    color: $black-primary;
+    &:hover,
+    &:focus {
+      border: none;
+    }
+  }
+  .nav-item {
+  }
+}
+
+.tooltip-label-right {
+  .invalid-feedback {
+    top: 10px;
+  }
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  border: none;
+}
+
+.sidebar {
+  .sub-menu {
+    ul {
+      li {
+        span {
+          padding-top: 0;
+          color: #7b7b7b;
+        }
+        a {
+          &.active {
+            span {
+              color: $red-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.breadcrumb {
+  background-color: #f8f8f8;
+  top: -5px;
+  left: 5px;
+  position: relative;
+  .breadcrumb-item {
+    a {
+      color: $red-primary;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .card.sage {
+    padding: 20px;
+  }
+}
