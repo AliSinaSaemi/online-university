@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import uuid from "react-uuid";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
@@ -90,11 +91,28 @@ const registerSchema = Yup.object().shape({
 export default class Register extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      tabs: []
+    }
+
+    this.addTab = this.addTab.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(values) {
     console.log(values.phoneNumber);
   }
+
+  addTab(e) {
+    e.preventDefault();
+    this.setState({ tabs: [...this.state.tabs, ""] });
+  }
+
+  removeTab(i) {
+    this.state.tabs.splice(i, 1);
+    this.setState({ tabs: this.state.tabs });
+  }
+
 
   render() {
     return (
@@ -140,6 +158,32 @@ export default class Register extends Component {
                   isSubmitting,
                 }) => (
                   <Form className="av-tooltip tooltip-label-right">
+                    <FormGroup className="relative">
+                      <a className="add_tab" onClick={this.addTab} href="#">
+                        Add +
+                      </a>
+                      <Tabs defaultActiveKey="form1" id="co-founders">
+                        <Tab eventKey="form1" title="1th">
+                          <h3> Hello </h3>
+                        </Tab>
+                        {this.state.tabs.map((tab, i) => {
+                          return (
+                            <Tab
+                              key={uuid()}
+                              eventKey={"form" + (i + 2)}
+                              title={i + 2 + "th"}
+                            >
+                              <h1>{i}</h1>
+                              <div>
+                                <a className="remove_tab" onClick={() => this.removeTab(i)} href="#">
+                                  Remove ({i + "th"})
+                                </a>
+                              </div>
+                            </Tab>
+                          );
+                        })}
+                      </Tabs>
+                    </FormGroup>
                     <FormGroup className="error-l-100 mb-4 mt-1">
                       <Label>
                         Phone Name{" "}
@@ -277,12 +321,6 @@ export default class Register extends Component {
                           {errors.product_or_services}
                         </div>
                       ) : null}
-                    </FormGroup>
-
-                    <FormGroup>
-                      <Tabs defaultActiveKey="form1" id="co-founders">
-                        <Tab eventKey="form1" title="1th"></Tab>
-                      </Tabs>
                     </FormGroup>
 
                     <FormGroup className="error-l-200 mb-4 mt-1">

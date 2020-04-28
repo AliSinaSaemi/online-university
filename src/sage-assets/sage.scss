@@ -8,6 +8,10 @@ $red-primary: #8e162a;
 $white-primary: #fff;
 $black-primary: #212529;
 
+.relative {
+  position: relative;
+}
+
 a {
   text-decoration: none;
   &:hover,
@@ -29,9 +33,18 @@ a {
   width: 100%;
 }
 
+// 
+
 .card.sage {
   padding: 35px;
 }
+
+
+/***********************
+
+        Sage
+
+***********************/
 
 form.sage {
   padding: 30px;
@@ -137,6 +150,15 @@ form.sage {
   color: #8c8c8c;
 }
 
+.add_tab {
+  background-color: #880a1f;
+  border-radius: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  color: #fff;
+  right: 0;
+  top: 0;
+}
 /***********************
 
     Reactbootstrap
