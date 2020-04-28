@@ -93,7 +93,7 @@ export default class Register extends Component {
     super(props);
 
     this.state = {
-      tabs: ["", ""],
+      tabs: ["", "", "", "", ""],
     };
 
     this.addTab = this.addTab.bind(this);
@@ -115,7 +115,6 @@ export default class Register extends Component {
   };
 
   render() {
-    const tabLen = this.state.tabs.length;
     return (
       <Fragment>
         <Row>
@@ -170,31 +169,43 @@ export default class Register extends Component {
                       <span>press the add button to add a new item</span>
                       <Tabs
                         className="mt-3"
-                        defaultActiveKey={"form" + tabLen}
+                        defaultActiveKey={"form1"}
                         id="co-founders"
                       >
                         {this.state.tabs.map((tab, i) => {
-                          return (
-                            <Tab
-                              key={uuid()}
-                              eventKey={"form" + (i + 1)}
-                              title={i + 1 + "th"}
-                            >
-                              <h1>Part {i}</h1>
-                              <div>
-                                <a
-                                  className="remove_tab"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    this.removeTab(i);
-                                  }}
-                                  href="#"
-                                >
-                                  Remove ({i + "th"})
-                                </a>
-                              </div>
-                            </Tab>
-                          );
+                          if (i == 0) {
+                            return (
+                              <Tab
+                                key={uuid()}
+                                eventKey={"form" + (i + 1)}
+                                title={i + 1 + "th"}
+                              >
+                                <h1>Part {i + 1}</h1>
+                              </Tab>
+                            );
+                          } else {
+                            return (
+                              <Tab
+                                key={uuid()}
+                                eventKey={"form" + (i + 1)}
+                                title={i + 1 + "th"}
+                              >
+                                <h1>Part {i + 1}</h1>
+                                <div>
+                                  <a
+                                    className="remove_tab"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      this.removeTab(i);
+                                    }}
+                                    href="#"
+                                  >
+                                    Remove ({(i + 1) + "th"})
+                                  </a>
+                                </div>
+                              </Tab>
+                            );
+                          }
                         })}
                       </Tabs>
                     </FormGroup>
