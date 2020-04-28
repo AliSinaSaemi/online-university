@@ -93,8 +93,8 @@ export default class Register extends Component {
     super(props);
 
     this.state = {
-      tabs: []
-    }
+      tabs: [],
+    };
 
     this.addTab = this.addTab.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -108,13 +108,14 @@ export default class Register extends Component {
     this.setState({ tabs: [...this.state.tabs, ""] });
   }
 
-  removeTab(i) {
+  removeTab = (i) => {
+    console.log(this.state.tabs);
     this.state.tabs.splice(i, 1);
     this.setState({ tabs: this.state.tabs });
-  }
-
+  };
 
   render() {
+    const tabLen = this.state.tabs.length;
     return (
       <Fragment>
         <Row>
@@ -162,7 +163,16 @@ export default class Register extends Component {
                       <a className="add_tab" onClick={this.addTab} href="#">
                         Add +
                       </a>
-                      <Tabs defaultActiveKey="form1" id="co-founders">
+                      <h4>
+                        List each of your previous incubation / acceleration
+                        experience
+                      </h4>
+                      <span>press the add button to add a new item</span>
+                      <Tabs
+                        className="mt-3"
+                        defaultActiveKey="form1"
+                        id="co-founders"
+                      >
                         <Tab eventKey="form1" title="1th">
                           <h3> Hello </h3>
                         </Tab>
@@ -175,7 +185,14 @@ export default class Register extends Component {
                             >
                               <h1>{i}</h1>
                               <div>
-                                <a className="remove_tab" onClick={() => this.removeTab(i)} href="#">
+                                <a
+                                  className="remove_tab"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    this.removeTab(i);
+                                  }}
+                                  href="#"
+                                >
                                   Remove ({i + "th"})
                                 </a>
                               </div>
