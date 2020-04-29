@@ -113,8 +113,10 @@ export default class Register extends Component {
     this.state.tabs.splice(i, 1);
     this.setState({ tabs: this.state.tabs });
   };
+  
 
   render() {
+    const tabLen = this.state.tabs.length;
     return (
       <Fragment>
         <Row>
@@ -129,7 +131,7 @@ export default class Register extends Component {
         </Row>
         <Row>
           <Colxx xxs="12" className="mb-4">
-            <h1 className="mt-2 mb-4">Contact Information</h1>
+            <h1 className="mt-2 mb-4">Contact Information {tabLen}</h1>
             <Card className="sage">
               <Formik
                 initialValues={{
@@ -169,7 +171,7 @@ export default class Register extends Component {
                       <span>press the add button to add a new item</span>
                       <Tabs
                         className="mt-3"
-                        defaultActiveKey={"form1"}
+                        defaultActiveKey={"form" + tabLen}
                         id="co-founders"
                       >
                         {this.state.tabs.map((tab, i) => {
@@ -200,7 +202,7 @@ export default class Register extends Component {
                                     }}
                                     href="#"
                                   >
-                                    Remove ({(i + 1) + "th"})
+                                    Remove ({i + 1 + "th"})
                                   </a>
                                 </div>
                               </Tab>
