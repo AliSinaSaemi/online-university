@@ -93,6 +93,7 @@ export default class Register extends Component {
     super(props);
 
     this.state = {
+      activeTab1: 1,
       tabs: ["", "", "", "", ""],
     };
 
@@ -108,12 +109,20 @@ export default class Register extends Component {
     this.setState({ tabs: [...this.state.tabs, ""] });
   }
 
+  changer = () => {
+    alert("The only thing happen is pain");
+    this.setState({
+      activeTab1: 2,
+    });
+  };
+
   removeTab = (i) => {
+    const tabLen = this.state.tabs.length;
     console.log(this.state.tabs);
     this.state.tabs.splice(i, 1);
+
     this.setState({ tabs: this.state.tabs });
   };
-  
 
   render() {
     const tabLen = this.state.tabs.length;
@@ -131,7 +140,9 @@ export default class Register extends Component {
         </Row>
         <Row>
           <Colxx xxs="12" className="mb-4">
-            <h1 className="mt-2 mb-4">Contact Information {tabLen}</h1>
+            <h1 className="mt-2 mb-4">
+              Contact Information {this.state.activeTab1}
+            </h1>
             <Card className="sage">
               <Formik
                 initialValues={{
@@ -161,6 +172,9 @@ export default class Register extends Component {
                 }) => (
                   <Form className="av-tooltip tooltip-label-right">
                     <FormGroup className="relative">
+                      <a onClick={this.changer} href="#">
+                        Change state
+                      </a>
                       <a className="add_tab" onClick={this.addTab} href="#">
                         Add +
                       </a>
@@ -171,7 +185,7 @@ export default class Register extends Component {
                       <span>press the add button to add a new item</span>
                       <Tabs
                         className="mt-3"
-                        defaultActiveKey={"form" + tabLen}
+                        defaultActiveKey={this.state.activeTab1}
                         id="co-founders"
                       >
                         {this.state.tabs.map((tab, i) => {
@@ -179,7 +193,7 @@ export default class Register extends Component {
                             return (
                               <Tab
                                 key={uuid()}
-                                eventKey={"form" + (i + 1)}
+                                eventKey={i + 1}
                                 title={i + 1 + "th"}
                               >
                                 <h1>Part {i + 1}</h1>
@@ -189,7 +203,7 @@ export default class Register extends Component {
                             return (
                               <Tab
                                 key={uuid()}
-                                eventKey={"form" + (i + 1)}
+                                eventKey={i + 1}
                                 title={i + 1 + "th"}
                               >
                                 <h1>Part {i + 1}</h1>
