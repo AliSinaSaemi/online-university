@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
+import "antd/dist/antd.css";
+import { Tabs } from "antd";
 import uuid from "react-uuid";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -12,7 +12,6 @@ import {
   Label,
   Button,
   TabContent,
-  TabPane,
   Nav,
   NavItem,
   NavLink,
@@ -28,6 +27,8 @@ import {
 } from "../../containers/form-validations/FormikFields";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../../containers/navs/Breadcrumb";
+
+const { TabPane } = Tabs;
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -91,41 +92,62 @@ const registerSchema = Yup.object().shape({
 export default class Register extends Component {
   constructor(props) {
     super(props);
-
+    this.newTabIndex = 0;
+    const panes = [
+      { title: "Student", content: "Hello world", key: "1" },
+      { title: "Student", content: "Hello world", key: "2" },
+      { title: "Student", content: "Hello world", key: "3" },
+    ];
     this.state = {
-      activeTab1: 1,
-      tabs: ["", "", "", "", ""],
+      activeKey: panes[0].key,
+      panes,
     };
-
-    this.addTab = this.addTab.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(values) {
     console.log(values.phoneNumber);
   }
 
-  addTab(e) {
-    e.preventDefault();
-    this.setState({ tabs: [...this.state.tabs, ""] });
-  }
-
-  changer = () => {
-    alert("The only thing happen is pain");
-    this.setState({
-      activeTab1: 2,
-    });
+  onChange = (activeKey) => {
+    this.setState({ activeKey });
   };
 
-  removeTab = (i) => {
-    const tabLen = this.state.tabs.length;
-    console.log(this.state.tabs);
-    this.state.tabs.splice(i, 1);
+  onEdit = (targetKey, action) => {
+    this[action](targetKey);
+  };
 
-    this.setState({ tabs: this.state.tabs });
+  add = () => {
+    const { panes } = this.state;
+    const activeKey = `newTab${this.newTabIndex++}`;
+    panes.push({
+      title: "Student",
+      content: "Hello world",
+      key: activeKey,
+    });
+    this.setState({ panes, activeKey });
+  };
+
+  remove = (targetKey) => {
+    let { activeKey } = this.state;
+    let lastIndex;
+    this.state.panes.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const panes = this.state.panes.filter((pane) => pane.key !== targetKey);
+    if (panes.length && activeKey === targetKey) {
+      if (lastIndex >= 0) {
+        activeKey = panes[lastIndex].key;
+      } else {
+        activeKey = panes[0].key;
+      }
+    }
+    this.setState({ panes, activeKey });
   };
 
   render() {
-    const tabLen = this.state.tabs.length;
+    const { panes } = this.state;
     return (
       <Fragment>
         <Row>
@@ -140,9 +162,7 @@ export default class Register extends Component {
         </Row>
         <Row>
           <Colxx xxs="12" className="mb-4">
-            <h1 className="mt-2 mb-4">
-              Contact Information {this.state.activeTab1}
-            </h1>
+            <h1 className="mt-2 mb-4">Contact Information</h1>
             <Card className="sage">
               <Formik
                 initialValues={{
@@ -172,57 +192,26 @@ export default class Register extends Component {
                 }) => (
                   <Form className="av-tooltip tooltip-label-right">
                     <FormGroup className="relative">
-                      <a onClick={this.changer} href="#">
-                        Change state
-                      </a>
-                      <a className="add_tab" onClick={this.addTab} href="#">
-                        Add +
-                      </a>
                       <h4>
                         List each of your previous incubation / acceleration
                         experience
                       </h4>
                       <span>press the add button to add a new item</span>
                       <Tabs
-                        className="mt-3"
-                        defaultActiveKey={this.state.activeTab1}
-                        id="co-founders"
+                        onChange={this.onChange}
+                        activeKey={this.state.activeKey}
+                        type="editable-card"
+                        onEdit={this.onEdit}
                       >
-                        {this.state.tabs.map((tab, i) => {
-                          if (i == 0) {
-                            return (
-                              <Tab
-                                key={uuid()}
-                                eventKey={i + 1}
-                                title={i + 1 + "th"}
-                              >
-                                <h1>Part {i + 1}</h1>
-                              </Tab>
-                            );
-                          } else {
-                            return (
-                              <Tab
-                                key={uuid()}
-                                eventKey={i + 1}
-                                title={i + 1 + "th"}
-                              >
-                                <h1>Part {i + 1}</h1>
-                                <div>
-                                  <a
-                                    className="remove_tab"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      this.removeTab(i);
-                                    }}
-                                    href="#"
-                                  >
-                                    Remove ({i + 1 + "th"})
-                                  </a>
-                                </div>
-                              </Tab>
-                            );
-                          }
-                        })}
+                        {panes.map((pane) => (
+                          <TabPane
+                            tab={pane.title}
+                            key={pane.key}
+                            closable={pane.closable}
+                          >
+                            {pane.content}
+                          </TabPane>
+                        ))}
                       </Tabs>
                     </FormGroup>
                     <FormGroup className="error-l-100 mb-4 mt-1">
