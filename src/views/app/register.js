@@ -38,9 +38,19 @@ const onlyNumbers = /^[0-9]*$/;
 
 const onlyStrings = /^[a-zA-Z]*$/;
 
+const linkedIn = /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/;
+
+const fullName = /^([\w]{3,})+\s+([\w\s]{3,})+$/;
+
 const teamMember = [
   { value: "I'm in the team", label: "Yes" },
   { value: "I am not in the team", label: "No" },
+];
+
+const gender = [
+  { value: "I'm male", label: "Male" },
+  { value: "I'm female", label: "Female" },
+  { value: "Other", label: "Other" },
 ];
 
 const productOrServices = [
@@ -89,14 +99,63 @@ const registerSchema = Yup.object().shape({
   lastName: Yup.string().required("Please enter your last name"),
 });
 
+function validateFullname(value) {
+  let error;
+  if (!value) {
+    error = "Required";
+  } else if (/^([\w]{3,})+\s+([\w\s]{3,})+$/.test(value)) {
+    error = "Invalid Full name";
+  }
+  return error;
+}
+
+function validateLinkedIn(value) {
+  let error;
+  if (!value) {
+    error = "Required";
+  } else if (/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/.test(value)) {
+    error = "Invalid Linkedin link";
+  }
+  return error;
+}
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
-    this.newTabIndex = 0;
+    this.newTabIndex = 2;
     const panes = [
-      { title: "Student", content: "Hello world", key: "1" },
-      { title: "Student", content: "Hello world", key: "2" },
-      { title: "Student", content: "Hello world", key: "3" },
+      {
+        title: "Student",
+        content: (
+          <div>
+            <FormGroup className="error-l-100 mb-4 mt-1">
+              <Label>
+                Full Name <span className="sa_required_input">(Required)</span>
+              </Label>
+              <Field className="form-control" name="fullName1" />
+            </FormGroup>
+            <FormGroup className="error-l-100 mb-4 mt-1">
+              <Label>
+                Linkedin <span className="sa_required_input">(Required)</span>
+              </Label>
+              <Field className="form-control" name="linkedIn1" />
+            </FormGroup>
+            <FormGroup className="error-l-100 mb-4 mt-1">
+              <Label>
+                Resident <span className="sa_required_input">(Required)</span>
+              </Label>
+              <Field className="form-control" name="resident1" />
+            </FormGroup>
+            <FormGroup className="error-l-100 mb-4 mt-1">
+              <Label>
+                QID <span className="sa_required_input">(Required)</span>
+              </Label>
+              <Field className="form-control" name="qid1" />
+            </FormGroup>
+          </div>
+        ),
+        key: "1",
+      },
     ];
     this.state = {
       activeKey: panes[0].key,
@@ -118,10 +177,37 @@ export default class Register extends Component {
 
   add = () => {
     const { panes } = this.state;
-    const activeKey = `newTab${this.newTabIndex++}`;
+    const activeKey = `${this.newTabIndex++}`;
     panes.push({
       title: "Student",
-      content: "Hello world",
+      content: (
+        <div>
+          <FormGroup className="error-l-100 mb-4 mt-1">
+            <Label>
+              Full Name <span className="sa_required_input">(Required)</span>
+            </Label>
+            <Field className="form-control" name={"fullName" + activeKey} />
+          </FormGroup>
+          <FormGroup className="error-l-100 mb-4 mt-1">
+            <Label>
+              Linkedin <span className="sa_required_input">(Required)</span>
+            </Label>
+            <Field className="form-control" name="linkedIn2" />
+          </FormGroup>
+          <FormGroup className="error-l-100 mb-4 mt-1">
+            <Label>
+              Resident <span className="sa_required_input">(Required)</span>
+            </Label>
+            <Field className="form-control" name="resident2" />
+          </FormGroup>
+          <FormGroup className="error-l-100 mb-4 mt-1">
+            <Label>
+              QID <span className="sa_required_input">(Required)</span>
+            </Label>
+            <Field className="form-control" name="qid2" />
+          </FormGroup>
+        </div>
+      ),
       key: activeKey,
     });
     this.setState({ panes, activeKey });
@@ -166,6 +252,7 @@ export default class Register extends Component {
             <Card className="sage">
               <Formik
                 initialValues={{
+                  firstName: "",
                   phoneNumber: "",
                   team_member: "",
                   describeProblem: "",
@@ -196,24 +283,30 @@ export default class Register extends Component {
                         List each of your previous incubation / acceleration
                         experience
                       </h4>
-                      <span>press the add button to add a new item</span>
+                      <span>press the add button to add a new item </span>
                       <Tabs
                         onChange={this.onChange}
                         activeKey={this.state.activeKey}
                         type="editable-card"
                         onEdit={this.onEdit}
+                        className="mt-3 mb-3"
                       >
                         {panes.map((pane) => (
                           <TabPane
                             tab={pane.title}
                             key={pane.key}
-                            closable={pane.closable}
+                            closable={
+                              this.state.panes.length == 1 ? "" : pane.closable
+                            }
                           >
                             {pane.content}
                           </TabPane>
                         ))}
                       </Tabs>
                     </FormGroup>
+
+                    <hr />
+
                     <FormGroup className="error-l-100 mb-4 mt-1">
                       <Label>
                         Phone Name{" "}
