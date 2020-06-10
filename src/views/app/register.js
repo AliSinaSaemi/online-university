@@ -4,6 +4,7 @@ import { Tabs } from "antd";
 import uuid from "react-uuid";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import DatePicker from "react-datepicker";
 
 import {
   Card,
@@ -192,19 +193,19 @@ export default class Register extends Component {
             <Label>
               Linkedin <span className="sa_required_input">(Required)</span>
             </Label>
-            <Field className="form-control" name="linkedIn2" />
+            <Field className="form-control" name={"linkedIn" + activeKey} />
           </FormGroup>
           <FormGroup className="error-l-100 mb-4 mt-1">
             <Label>
               Resident <span className="sa_required_input">(Required)</span>
             </Label>
-            <Field className="form-control" name="resident2" />
+            <Field className="form-control" name={"resident" + activeKey} />
           </FormGroup>
           <FormGroup className="error-l-100 mb-4 mt-1">
             <Label>
               QID <span className="sa_required_input">(Required)</span>
             </Label>
-            <Field className="form-control" name="qid2" />
+            <Field className="form-control" name={"qid" + activeKey} />
           </FormGroup>
         </div>
       ),
