@@ -17,7 +17,7 @@
     "clone-deep": "^4.0.1",
     "firebase": "^7.14.1",
     "formik": "^1.5.1",
-    "moment": "2.22.2",
+    "moment": "2.29.2",
     "mousetrap": "^1.6.3",
     "rc-slider": "^8.6.1",
     "rc-switch": "^1.6.0",
